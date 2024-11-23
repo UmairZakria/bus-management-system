@@ -2,7 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+
+
+
+
+
+
+#nprogress .bar {
+  background: #5d6e7e; 
+  height: 4px; 
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px white, 0 0 5px white; 
+}
+
+
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -18,4 +34,4 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
