@@ -14,7 +14,8 @@ import Image from 'next/image'
 import ceye from './images/closedeye.png'
 import loading from './images/loading.gif'
 // import axios from 'axios'
-import { SessionProvider,useSession } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
+import { motion } from "framer-motion";
 
 
 
@@ -69,13 +70,13 @@ const Pagework = () => {
             }, 3000);
         } else {
             const session = await getSession();
-            if (session?.user?.role === "user"){
+            if (session?.user?.role === "user") {
 
                 router.push("/Home");
-            }else if (session?.user?.role === "admin"){
+            } else if (session?.user?.role === "admin") {
                 router.push("/Panel");
 
-            }else (
+            } else (
                 router.push("/Contact")
             )
 
@@ -84,69 +85,73 @@ const Pagework = () => {
 
     }
     return (
-    <>
-        <Navbar />
+        <>
+            <Navbar />
 
 
-        <div className='w-full lg:h-screen h-screen relative' >
-            <img className='w-full object-cover h-full' src="https://images.pexels.com/photos/29008426/pexels-photo-29008426/free-photo-of-vintage-tram-interior-in-wroclaw.jpeg" alt="" />
-            <div className='absolute space-y-4  bg-[#00000085] py-10 bottom-5     px-2 left-0 w-full  h-auto'>
-                {/* <div className='relative' > */}
-                <div style={loadings} className='absolute top-0 left-0 rounded-2xl  w-full h-full box-border p-4 flex items-center justify-center z-50 bg-[#0000004d]'>
+            <div  style={{ overflow: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className='w-full lg:h-screen h-screen relative' >
+                <img className='w-full object-cover h-full' src="https://images.pexels.com/photos/29008426/pexels-photo-29008426/free-photo-of-vintage-tram-interior-in-wroclaw.jpeg" alt="" />
+                <div className='absolute space-y-4  bg-[#00000085] py-10 bottom-5     px-2 left-0 w-full  h-auto'>
+                    {/* <div className='relative' > */}
+                    <div style={loadings} className='absolute top-0 left-0 rounded-2xl  w-full h-full box-border p-4 flex items-center justify-center z-50 bg-[#0000004d]'>
 
-                    <Image
-                        className=" object-cover    "
-                        src={loading} // Path to your image
-                        sizes={50}
-                        alt="Description of image"
-                    />
-                </div>
-                <form onSubmit={handellogin} className=' bg-[#000000b4] px-6 w-full lg:w-1/3 md:w-1/2 gap-6 mx-auto   mt-2 py-6 flex flex-col'>
-                    {error && <p style={{ color: 'red' }}> {error} </p>}
-
-                    <label className='text-[white]  text-center  font-medium text-2xl' >Login </label>
-
-
-                    <div className='flex flex-col '>
-
-                        <label htmlFor="Email" className='text-white font-medium text-sm ' >Email Address</label>
-                        <input type="email" required className='pt-2  text-white focus:outline-none px-2 border-pp bg-transparent  border-x-0 border-t-0 border-b-4 '
-                            onChange={(e) => setEmail(e.target.value)}
+                        <Image
+                            className=" object-cover    "
+                            src={loading} // Path to your image
+                            sizes={50}
+                            alt="Description of image"
                         />
                     </div>
+                    <motion.form
+                        initial={{ x: '100vw' }}
+                        animate={{ x: 0 }}
+                        transition={{ delay: 2.1, duration: 1, type: 'spring' }}
+                        onSubmit={handellogin} className=' bg-[#000000b4] px-6 w-full lg:w-1/3 md:w-1/2 gap-6 mx-auto   mt-2 py-6 flex flex-col'>
+                        {error && <p style={{ color: 'red' }}> {error} </p>}
+
+                        <label className='text-[white]  text-center  font-medium text-2xl' >Login </label>
 
 
-                    <div className='flex flex-col gap-1'>
+                        <div className='flex flex-col '>
 
-                        <label className='text-white font-medium text-sm ' htmlFor="Password">Password</label>
-                        <div className='w-full relative'>
-                            <input required type={passwordtype} className=' text-white pt-2 px-2 w-full border-gray-700  focus:outline-none bg-transparent border-b-4 border-x-0 border-t-0'
-                                onChange={(e) => setPassword(e.target.value)}
+                            <label htmlFor="Email" className='text-white font-medium text-sm ' >Email Address</label>
+                            <input type="email" required className='pt-2  text-white focus:outline-none px-2 border-pp bg-transparent  border-x-0 border-t-0 border-b-4 '
+                                onChange={(e) => setEmail(e.target.value)}
                             />
-                            <div className='p-[3px] bg-pp absolute rounded-t-md -top-1     right-0  '>
+                        </div>
 
-                                <Image
-                                    className=" object-cover  "
-                                    src={passwordeye} // Path to your image
-                                    alt="Description of image"
 
-                                    width={30}
-                                    onClick={handeleye}
-                                    height={30}
-                                // layout='responsive'
+                        <div className='flex flex-col gap-1'>
+
+                            <label className='text-white font-medium text-sm ' htmlFor="Password">Password</label>
+                            <div className='w-full relative'>
+                                <input required type={passwordtype} className=' text-white pt-2 px-2 w-full border-gray-700  focus:outline-none bg-transparent border-b-4 border-x-0 border-t-0'
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
+                                <div className='p-[3px] bg-pp absolute rounded-t-md -top-1     right-0  '>
 
+                                    <Image
+                                        className=" object-cover  "
+                                        src={passwordeye} // Path to your image
+                                        alt="Description of image"
+
+                                        width={30}
+                                        onClick={handeleye}
+                                        height={30}
+                                    // layout='responsive'
+                                    />
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <Link href={'/Rigister'} className="text-white underline">Did not have account Rigister Now!</Link>
-                    <input type="submit" value={'Login Now'} className='text-white shadow-sm bg-pp hover:opacity-80  active:bg-opacity-80 cursor-pointer py-3  mt-3' />
-                </form>
-            </div>
+                        <Link href={'/Rigister'} className="text-white underline">Did not have account Rigister Now!</Link>
+                        <input type="submit" value={'Login Now'} className='text-white shadow-sm bg-pp hover:opacity-80  active:bg-opacity-80 cursor-pointer py-3  mt-3' />
+                    </motion.form>
+                </div>
 
-            {/* </div> */}
-        </div>
-    </>
+                {/* </div> */}
+            </div>
+        </>
 
     )
 }
@@ -154,8 +159,8 @@ const Pagework = () => {
 
 export default function page() {
     return (
-      <SessionProvider>
-        <Pagework />
-      </SessionProvider>
+        <SessionProvider>
+            <Pagework />
+        </SessionProvider>
     );
-  }
+}

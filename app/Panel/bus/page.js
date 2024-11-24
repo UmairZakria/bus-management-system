@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 import axios from "axios";
 const page = () => {
@@ -52,7 +53,7 @@ const page = () => {
     data.set("contactNumber", formData.contactNumber);
     try {
       axios.post('/api/addbus', data )
-        .then((res) => { console.log(res) 
+        .then((res) => { 
 
 
           if (res.data.success){
@@ -90,7 +91,12 @@ const page = () => {
   };
 
   return (
-    <form
+    <motion.form
+    style={{ overflow: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+
+    initial={{x: '100vw'}}
+    animate={{x: 0}}
+    transition={{delay:1,duration:1.2,type:'spring',stiffness:200}}
       onSubmit={handleSubmit}
       className="max-w-lg mx-auto p-6 bg-white mb-[90px] rounded shadow-md"
     >
@@ -174,7 +180,7 @@ const page = () => {
       >
         Add Bus
       </button>
-    </form>
+    </motion.form>
   );
 };
 

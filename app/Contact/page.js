@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { SessionProvider } from 'next-auth/react'
 import Navbar from '@/components/Navbar'
+import { motion } from 'framer-motion'
 
 
 const page = () => {
@@ -40,8 +41,14 @@ const page = () => {
 
             <div>
 
-                <div className="flex flex-col md:flex-row md:gap-2 mt-[80px] h-auto lg:flex-row items-center p-6  ">
-                    {/* Left Side: Doctor Image */}
+                <motion.div
+                initial={{opacity:0}}
+                animate={{opacity:1}}
+                transition={{delay:1.5,duration:1.2}}
+                
+                
+                
+                className="flex flex-col md:flex-row md:gap-2 mt-[80px] h-auto lg:flex-row items-center p-6  ">
                     <div className="w-full h-[90vh] lg:w-1/2 mb-6 lg:mb-0 ">
                         <img
                             src={ImageURL}
@@ -101,7 +108,7 @@ const page = () => {
                             </button>
                         </form>
                     </div>
-                </div>
+                </motion.div>
 
             </div>
 

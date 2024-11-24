@@ -5,6 +5,7 @@ import { SessionProvider, useSession } from "next-auth/react";
 import Navbar from '@/components/Navbar';
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import { motion } from 'framer-motion';
 import { useRouter } from "next/navigation";
 
 
@@ -27,7 +28,6 @@ const Pagework = () => {
   const getdata = () => {
     axios.get('/api/onbus')
       .then((res) => {
-        console.log(res)
         setData(res.data.bus)
       })
       .catch((er) => { console.log(err) })
@@ -68,7 +68,6 @@ const Pagework = () => {
   useEffect(() => {
 
     const searchdata = data.filter((item) => item.fromto === searchQuery)
-    console.log(searchdata)
     if (should) {
 
       setSearch2(searchdata)
@@ -128,7 +127,6 @@ const Pagework = () => {
       setProf('')
     }, 3000);
     setData2(searchdata)
-    console.log(data2)
 
 
   }
@@ -141,7 +139,15 @@ const Pagework = () => {
       <Navbar></Navbar>
       <div className='w-full  h-screen relative'>
         <img className='w-full object-cover h-full' src="https://images.pexels.com/photos/2224424/pexels-photo-2224424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
-        <div className='absolute space-y-4  bg-[#00000063] py-10 bottom-5  p-8  px-16 left-0 w-full  h-auto'>
+        <motion.div 
+        initial={{scale:0.1,opacity:0.1}} 
+        
+        
+        animate={{scale:1,opacity:1}} 
+        transition={{delay:1,duration:1}}
+        
+        className='absolute space-y-4  bg-[#00000063] py-10 bottom-5  p-8  px-16 left-0 w-full  h-auto'>
+
           <div>
             <h1 className='font-semibold text-white text-2xl md:text-3xl lg:text-3xl text-center lg:text-start md:text-start'>Search for Bus</h1>
             <span className='text-gray-400'>Find the best deals for your bus travel</span>
@@ -207,7 +213,7 @@ const Pagework = () => {
             <input type="submit" value="Search" className='px-4 hover:border border border-pp transition-all ease-out duration-700 bg-[#5d6e7e]  text-white  m-1 py-3 hover:bg-transparent  ' />
           </form>
 
-        </div>
+        </motion.div>
       </div>
       <div className='container space-y-3 px-2 my-5 l mx-auto'>
         <label htmlFor="" className='text-lg text-red-700 text-center'>{prof}</label>
@@ -245,17 +251,23 @@ const Pagework = () => {
 
 
 
-      <div className='container space-y-3 px-2 my-5 l mx-auto'>
+      <div  style={{ overflow: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className='container space-y-3 px-2 my-5 l mx-auto'>
         <h1 className="text-center text-3xl w-full">Book Your Bus Now!</h1>
 
         {
-          data.map((data) => (
+          data.map((data,index) => (
 
-            <div key={data._id} className='border relative rounded-lg p-2 justify-between flex-wrap flex gap-4' >
+            <motion.div
+            initial={{scale:0.4}}
+            whileInView={{scale:1}}
+            transition={{delay: 0.2*index,duration: 1}}
+            viewport={{once: true}}
+            
+            key={data._id} className='border relative rounded-lg p-2 justify-between flex-wrap flex gap-4' >
               <div className='flex flex-col  justify-center gap-4 '>
                 <div className="flex gap-1 flex-col -center">
 
-                  <h1 className='text-2xl '>{data.date}</h1>
+                  <h1 className='text-2xl '>{data.date} </h1>
                   <p className='space-x-2 '><span className='font-semitbold text-xl'>From : </span>{data.fromto}   <span className='font-semitbold text-xl'>Where To :</span> {data.whereto} <span className='font-semitbold text-xl'>Time : </span>{data.time ? Format(data.time) : ''} <span className='font-semitbold text-xl'>Seats Price : </span> Rs. {data.seatprice} </p>
 
 
@@ -268,7 +280,7 @@ const Pagework = () => {
               </div>
               <button onClick={() => handelbook(data._id)} className='px-4 bg-pp py-3 lg:py-1 text-white'>BOOK NOW</button>
 
-            </div>
+            </motion.div>
           ))}
 
       </div>

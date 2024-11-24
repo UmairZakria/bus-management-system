@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 
 import logo from './ui/logo.png'
 import { signOut } from "next-auth/react";
+import { motion } from 'framer-motion'
 
 
 const Navbar = () => {
@@ -22,7 +23,13 @@ const Navbar = () => {
         setIsOpen(!isOpen); // Toggle the menu state
     };
     return (
-        <div className='     fixed bg-white top-0 items-center h-[80px]  z-[100]  w-full backdrop-blur-lg bg-opacity-10'>
+        <motion.div
+        initial={{y:-90}}
+        animate={{y:0}}
+        transition={{delay:1,duration:0.7 ,type:'spring',stiffness:120}}
+        
+        
+        className='     fixed bg-white top-0 items-center h-[80px]  z-[100]  w-full backdrop-blur-lg bg-opacity-10'>
             <div className='container flex justify-between items-center  h-full mx-auto w-full '>
 
                 <div className='text-3xl   bg-gradient-to-l from-indigo-500 via-green-700  to-green-600 bg-clip-text text-transparent ' >
@@ -86,7 +93,7 @@ const Navbar = () => {
             </div>
 
 
-        </div>
+        </motion.div>
     )
 }
 

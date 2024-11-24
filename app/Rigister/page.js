@@ -4,36 +4,37 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/Navbar";
-
+import { motion } from "framer-motion";
 import axios from 'axios'
 
 const Register = () => {
     const router = useRouter()
-    const [status,setStatus] = useState()
+    const [status, setStatus] = useState()
     const [url, setUrl] = useState('')
     const [type, setType] = useState('')
     const [error, setError] = useState('')
 
-    const getadmin = () =>{
+    const getadmin = () => {
         axios.get('/api/admin')
-        .then((res) => {console.log(res)
-            if(res.data.admin.length <= 0){
-                setStatus(true)
+            .then((res) => {
+                console.log(res)
+                if (res.data.admin.length <= 0) {
+                    setStatus(true)
 
-            }else{
-                setUrl('/api/register')
+                } else {
+                    setUrl('/api/register')
 
-            }
-        })
-        .catch((err) => {console.log(err)})
-        
+                }
+            })
+            .catch((err) => { console.log(err) })
 
-        
+
+
     }
     useEffect(() => {
         getadmin()
-        console.log(type) 
-        
+        console.log(type)
+
         if (type === 'user') {
             setUrl('/api/register')
             console.log(url)
@@ -43,10 +44,10 @@ const Register = () => {
 
             setUrl('/api/admin')
 
-        }else {
+        } else {
             console.log(url)
         }
-    
+
 
     }, [type])
 
@@ -140,30 +141,42 @@ const Register = () => {
                 </SessionProvider>
 
             </div>
-            <div className="flex items-center justify-center  min-h-screen bg-gray-100">
-                <div className="w-full max-w-md p-8 space-y-4 mt-[90px] bg-white rounded-lg shadow-md">
+
+
+            <div
+            style={{ overflow: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+
+                className="flex items-center justify-center  min-h-screen bg-gray-100"
+            >
+                <motion.div
+                    initial={{ x: '100vw' }}
+                    animate={{ x: 0 }}
+                    transition={{ delay: 2, duration: 1, type: 'spring'}}
+
+
+                    className="w-full max-w-md p-8 space-y-4 mt-[90px] bg-white rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold text-center">Create Account</h2>
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <label className='text-lg text-red-500 font-semibold'>{error}</label>
                         {/* Name */}
                         {
-                            status?(
+                            status ? (
 
-                        <div className="space-y-4">
-                            <label htmlFor="name" className="block mb-1 font-medium">
-                                Select Rigister Type
-                            </label>
-                            <div className="flex items-center gap-4 w-full ">
-                                <label htmlFor="">User: </label>
-                                <input value={'user'} type="radio" name="type" onChange={(e) => setType(e.target.value)} />
-                                <label htmlFor="">Admin: </label>
+                                <div className="space-y-4">
+                                    <label htmlFor="name" className="block mb-1 font-medium">
+                                        Select Rigister Type
+                                    </label>
+                                    <div className="flex items-center gap-4 w-full ">
+                                        <label htmlFor="">User: </label>
+                                        <input value={'user'} type="radio" name="type" onChange={(e) => setType(e.target.value)} />
+                                        <label htmlFor="">Admin: </label>
 
-                                <input value={'admin'} type="radio" name="type" onChange={(e) => setType(e.target.value)} />
+                                        <input value={'admin'} type="radio" name="type" onChange={(e) => setType(e.target.value)} />
 
-                            </div>
+                                    </div>
 
-                        </div>
-                            ):('')
+                                </div>
+                            ) : ('')
                         }
 
                         <div>
@@ -264,7 +277,7 @@ const Register = () => {
                             </button>
                         </div>
                     </form>
-                </div>
+                </motion.div>
             </div>
         </>
 

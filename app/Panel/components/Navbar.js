@@ -1,41 +1,19 @@
 import React from 'react'
 import Link from 'next/link'
 import { signOut } from "next-auth/react";
-
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import logo from '@/public/assests/logo.png'
-
 const Navbar = () => {
 
-    const [profile1, setProfile1] = useState({ display: 'none' });
-    const [menuico, setMenuico] = useState('https://img.icons8.com/ios-filled/50/FFFFFF/menu--v1.png');
     const handleLogout = () => {
         signOut({ callbackUrl: "/" });
     };
 
-
-    useEffect(() => {
-        if (profile1.display == 'flex') {
-
-            document.body.style.overflow = 'hidden';
-
-        } else {
-            document.body.style.overflow = 'auto';
-
-        }
-
-        // Cleanup the scroll style when component unmounts or popup closes
-        return () => {
-            document.body.style.overflow = 'auto';
-        };
-    }, [profile1]);
-
-
-
     return (
         <div className='relative  z-[100]'>
-            <nav className='bg-transparent fixed bottom-0 left-1/2 md:left-0 md:translate-x-0  md:top-1/2 md:-translate-y-1/2  lg:left-0 lg:translate-x-0  lg:top-1/2 lg:-translate-y-1/2 -translate-x-1/2 flex gap-6  justify-around items-center w-full md:w-[80px] lg:w-[80px] h-[80px] lg:h-[auto] md:h-auto '>
+            <nav
+
+
+            className='bg-transparent fixed bottom-0 left-1/2 md:left-0 md:translate-x-0  md:top-1/2 md:-translate-y-1/2  lg:left-0 lg:translate-x-0  lg:top-1/2 lg:-translate-y-1/2 -translate-x-1/2 flex gap-6  justify-around items-center w-full md:w-[80px] lg:w-[80px] h-[80px] lg:h-[auto] md:h-auto '
+            >
 
 
 
@@ -65,36 +43,11 @@ const Navbar = () => {
 
 
                 </div>
-                {/* <div className='md:flex hidden lg:flex items-center gap-4'>
-                    <button onClick={handleLogout} type="button" className='text-white px-5 flex py-6 w-auto  font-semibold bg-bb hover:bg-[#0098ac]'> Logout</button>
 
-                </div> */}
 
 
 
             </nav>
-            {/* <div style={profile1} className='w-full lg:hidden md:hidden text-white bg-pp transition-all duration-500 ease-in-out absolute  top-[100%] left-0 flex-col z-10 rounded-b-lg'>
-                <Link href='/Panel' className='px-5 flex py-4 w-full bg-gg hover:bg-[#0098ac]' >Home  </Link>
-                <Link href='/department' className='px-5 flex py-4 w-full bg-gg hover:bg-[#0098ac]' >Departments </Link>
-                <Link href='/Panel/messages' className='px-5 flex py-4 w-full bg-gg hover:bg-[#0098ac]' >Messages </Link>
-                <Link href='/appointment' className='px-5 flex py-4 w-full bg-gg hover:bg-[#0098ac]' >Appointment </Link>
-
-                <Link href='/Panel/setting' className='px-5 flex py-4 w-full bg-gg hover:bg-[#0098ac]' >Setting </Link>
-                
-
-
-                <button onClick={handleLogout} className='px-5 flex py-4 w-full border-t-2 bg-gg hover:bg-[#0098ac]'> Logout</button>
-                <div className='bg-gg w-1/12 mx-5 py-2'>
-
-                </div>
-
-
-
-
-
-
-
-            </div> */}
 
 
         </div>

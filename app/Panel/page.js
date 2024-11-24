@@ -6,11 +6,12 @@ import { useState, useEffect } from 'react'
 
 import { useRouter } from "next/navigation";
 import { format } from 'date-fns';
-
+import { motion } from 'framer-motion'
 
 const page = () => {
   const router = useRouter()
   const [data, setData] = useState([])
+  const [isScaled, setIsScaled] = useState(true);
 
 
   const [profile, setProfile] = useState('')
@@ -46,18 +47,22 @@ const page = () => {
   const getdata = () => {
     axios.get('/api/addbus')
       .then((res) => {
-        console.log(res)
         setData(res.data.bus)
       })
-      .catch((er) => { console.log(err) })
+      .catch((err) => { console.log(err) })
   }
   const handeldelete = (id) =>{
-    setInfodisplay('none')
+    setIsScaled(!isScaled);
+
+    setTimeout(() => {
+      setInfodisplay('none')
+      
+    }, 2000);
     document.body.style.overflow = 'auto';
 
     setBusinfo({})
     axios.delete(`/api/addbus?id=${id}`)
-    .then((res) =>{console.log(res)
+    .then((res) =>{
       if (res.data.status === 'success'){
         setProfile('Bus Deleted Successfully!')
       }else {
@@ -79,9 +84,18 @@ const page = () => {
   }, [profile])
   return (
     <div className='relative '>
-      <div style={{display:infodisplay}} className='absolute h-screen flex items-center  justify-center top-0 left-0 w-full bg-[#000000ad] font-semibold z-[100]'>
+      <motion.div
+  
+      
+      
+      style={{display:infodisplay}} className='absolute h-screen flex items-center  justify-center top-0 left-0 w-full bg-[#000000ad] font-semibold z-[100]'>
 
-        <div className="bg-white relative flex flex-wrap flex-col lg:flex-row items-center justify-around  w-[95%] h-auto gap-4 p-4 lg:w-1/2 md:w-1/2 ">
+        <motion.div
+            initial={{scale:0}}
+            whileInView={{scale:1}}
+            transition={{delay:0.5,duration:1.2}}
+        
+        className="bg-white relative flex flex-wrap flex-col lg:flex-row items-center justify-around  w-[95%] h-auto gap-4 p-4 lg:w-1/2 md:w-1/2 ">
         <button onClick={handelclose} className='absolute top-3 right-3'><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/multiply.png" alt="multiply"/></button>
           <h1 className="text-2xl font-semibold">BUS INFO</h1>
           <div className="flex items-center justify-around w-full">
@@ -123,11 +137,11 @@ const page = () => {
 
           
 
-        </div>
+        </motion.div>
 
 
 
-      </div>
+      </motion.div>
       <div className='p-8 border rounded-xl  mt-6  flex flex-wrap container mx-auto justify-between items-center '>
         <h1 className='font-semibold text-lg '> Add Buses</h1>
         <div className='flex gap-4'>
